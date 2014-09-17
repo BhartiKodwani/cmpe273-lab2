@@ -6,8 +6,15 @@ function Login() {
 	// sessionId -> user map
 	this.sessionMap = {
 		99999 : { name: 'Foo', email: 'foo@bar.com' }
-	};
+
+};
 }
+Login.prototype.isname=function(sessionId){
+return this.sessionMap[sessionId].name;
+};
+Login.prototype.isemail=function(sessionId){
+return this.sessionMap[sessionId].email;
+};
 /**
  * Say Hello {name} to the user
  */
@@ -39,9 +46,10 @@ Login.prototype.login = function(_name, _email) {
 
 /**
  * Logout from the server
- */ 
-Login.prototype.logout = function(sessionId) {
-	console.log('logout::' + sessionId);
+ */
+	Login.prototype.logout = function(sessionId) {
+delete this.sessionMap[sessionId];
+console.log('logout::' + sessionId);
    /*
 	* TODO: Remove the given sessionId from the sessionMap
 	*/

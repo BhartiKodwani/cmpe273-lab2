@@ -40,55 +40,29 @@ function post(request, response) {
 	// var newSessionId = login.login('xxx', 'xxx@gmail.com');
 	// TODO: set new session id to the 'session_id' cookie in the response
 	// replace "Logged In" response with response.end(login.hello(newSessionId));
-
-        var name=request.body.name;
-	var email=request.body.email;
-        var sessionId = login.login(name,email);
-        response.setHeader('Set-Cookie', 'session_id=' + sessionId);
-	response.end(login.hello(sessionId));
-	response.end("Logged In\n");
+	var name = request.name;
+	var email = request.email;
+	var newSessionId = login.login('name', 'email');
+	'session_id' = newSessionId;
+	response.end(response.end(login.hello(newSessionId)));
 };
 
 function del(request, response) {
 	console.log("DELETE:: Logout from the server");
  	// TODO: remove session id via login.logout(xxx)
  	// No need to set session id in the response cookies since you just logged out!
-                var cookies = request.cookies;
-		console.log(cookies);
-		if ('session_id' in cookies)
-		{
-		var newsession_id = cookies['session_id'];
-			if ( login.isLoggedIn(newsession_id) )
-			{
-		           login.logout(newsession_id);
-			   response.end('Logged out from the server\n');
-			}
-			else 
-			    response.end("Already logged out session\n");
-		}
-		else
-		response.end("Invalid session\n");
-              };
+
+  	response.end('Logged out from the server\n');
+};
 
 function put(request, response) {
 	console.log("PUT:: Re-generate new seesion_id for the same user");
-	// TODO: refresh session id; similar to the post() function;
-        var cookies = request.cookies;
-        console.log(cookies);
-        if('session_id' in cookies){
-        var sessionid=cookies['session_id'];
-        var name=login.isname(sessionid);
-        var email=login.isemail(sessionid);
-        login.logout(sessionid);
-        var newsessionid=login.login(name,email);
-        response.setHeader('Set-Cookie','session_id=' + newsessionid);
-        response.end("Re-freshed session id\n");
-}
-else{
-                   response.end("Invalid session!");
-}
+	// TODO: refresh session id; similar to the post() function
+
+	response.end("Re-freshed session id\n");
 };
 
 app.listen(8000);
 
 console.log("Node.JS server running at 8000...");
+
