@@ -44,9 +44,10 @@ function post(request, response) {
         var name=request.body.name;
 	var email=request.body.email;
         var sessionId = login.login(name,email);
-        response.setHeader('Set-Cookie', 'session_id=' + sessionId);
-	response.end(login.hello(sessionId));
-	response.end("Logged In\n");
+            
+                response.setHeader('Set-Cookie', 'session_id=' + sessionId);
+	        response.end(login.hello(sessionId));
+          	response.end("Logged In\n");
 };
 
 function del(request, response) {
@@ -58,12 +59,12 @@ function del(request, response) {
 		if ('session_id' in cookies)
 		{
 		var newsession_id = cookies['session_id'];
-			if ( login.isLoggedIn(newsession_id) )
-			{
-		           login.logout(newsession_id);
+		if ( login.isLoggedIn(newsession_id) )
+		{
+                            login.logout(newsession_id);
 			   response.end('Logged out from the server\n');
-			}
-			else 
+		}
+		else 
 			    response.end("Already logged out session\n");
 		}
 		else
@@ -76,13 +77,15 @@ function put(request, response) {
         var cookies = request.cookies;
         console.log(cookies);
         if('session_id' in cookies){
-        var sessionid=cookies['session_id'];
-        var name=login.isname(sessionid);
-        var email=login.isemail(sessionid);
-        login.logout(sessionid);
+              var sessionid=cookies['session_id'];
+              var name=login.isname(sessionid);
+              var email=login.isemail(sessionid);
+      
+         login.logout(sessionid);
         var newsessionid=login.login(name,email);
-        response.setHeader('Set-Cookie','session_id=' + newsessionid);
-        response.end("Re-freshed session id\n");
+       response.setHeader('Set-Cookie','session_id=' + newsessionid);
+      
+            response.end("Re-freshed session id\n");
 }
 else{
                    response.end("Invalid session!");
